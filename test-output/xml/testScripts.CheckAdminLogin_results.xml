@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AdminTool"
+           tests="1"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="6.759">
+  <properties />
+  
+  
+            <testcase name="LoginIntoTerraAdmin on [CheckAdminLogin passed=0 failed=0 skipped=0]" time="6.759" classname="testScripts.CheckAdminLogin" />
+      
+</testsuite>
