@@ -1,0 +1,18 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="UserLogin" parallel="false"
+	annotations="JDK" configfailurepolicy="continue">
+	<listeners>
+	<listener class-name="org.uncommons.reportng.HTMLReporter" />
+	<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+	</listeners>
+
+	 <test name="AdminTool" junit="false" enabled="true">
+		 <parameter name="browser" value="chrome"/>
+		 <parameter name="Environment" value="dev"/>
+		<classes>
+			<class name="testScripts.CheckUserLogin" />
+			<class name="testScripts.CheckProfileOnEventListPage"></class>
+		</classes> 
+	</test>  
+	
+</suite> 

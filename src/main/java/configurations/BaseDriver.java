@@ -50,39 +50,17 @@ public class BaseDriver {
 		FIREFOX, INTERNETEXPLORER, CHROME, SAFARI
 	}
 
-	public BaseDriver(String browser, String version, String operatingSystem,
+	public BaseDriver(String browser,
 					  long limit, String outputDir) {
 		this.browser = parseBrowser(browser);
 		this.limit = limit;
-
 		this.outputPath = outputDir;
 
-		logger.i(
-				"Base Driver initialized! browser=%s,version=%s,OperatingSystem=%s limit=%d, outPath=%s",
-				browser, version, operatingSystem, limit,outputDir);
-				loadWebDriverObject();
+		loadWebDriverObject();
 	}
 
 	public Browsers getBrowser() {
 		return this.browser;
-	}
-
-	public String getBrowserVersion() {
-		return ((RemoteWebDriver) driver).getCapabilities().getVersion();
-	}
-
-	public String getRemoteTargetInfo() {
-		String remoteInfo = "";
-
-		Capabilities cap = ((RemoteWebDriver) driver).getCapabilities();
-		String browserName = cap.getBrowserName();
-		String browserVersion = cap.getVersion();
-		Platform platform = cap.getPlatform();
-		String platformName = platform.toString();
-		String platformVersion = platform.getMajorVersion() + "." + platform.getMinorVersion();
-		remoteInfo += "Browser: <b>" + browserName + "</b> <i>(v" + browserVersion + ")</i> <br/>";
-		remoteInfo += "Platform: <b>" + platformName + "</b> <i>(v" + platformVersion + ")</i>";
-		return remoteInfo;
 	}
 
 	public void stopDriver() {
@@ -142,7 +120,7 @@ public class BaseDriver {
 
 		logger.i("loadWebDriverObject");
 		try {
-			String filePath = System.getProperty("user.dir") + "\\Dependency\\";
+			String filePath = System.getProperty("user.dir") + "\\Driver\\";
 
 			if (browser.equals(Browsers.FIREFOX)) {
 				System.setProperty("webdriver.gecko.driver",filePath+"/geckodriver.exe");
@@ -177,17 +155,6 @@ public class BaseDriver {
 	}
 
 
-	/**
-	 * Purpose - Change WebElement Style at RunTime with Element ID
-	 *
-	 * @param elementID
-	 *            - WebElement object for which style need to change at runtime.
-	 * @param TagName
-	 *            - TagName for which the new value need to change.
-	 * @param newValue
-	 *            - NewValue for changed value.
-	 */
-
 	public void changeStyleAttrWithElementID(String elementID, String TagName, String newValue) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		String executeScriptText = "document.getElementById('" + elementID + "').setAttribute('" + TagName + "', '"
@@ -218,8 +185,6 @@ public class BaseDriver {
 	}
 
 	public void waitUntilPageIsLoaded() {
-
-
 
 		setImplicitWait(0);
 

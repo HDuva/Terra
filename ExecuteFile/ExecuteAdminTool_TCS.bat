@@ -1,5 +1,5 @@
 @echo off
-set projectLocation=E:\Framework\SeleniumFramework
+set projectLocation=F:\Terra\TerraFramework
 cd %projectLocation%
 set classpath=%projectLocation%\src\main\java;%projectLocation%\Dependency\org\testng\testng\7.3.0\*
 

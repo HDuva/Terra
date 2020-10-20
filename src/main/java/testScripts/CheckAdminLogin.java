@@ -15,7 +15,7 @@ public class CheckAdminLogin extends BaseTest {
 	@Test(enabled = true)
 	public void LoginIntoTerraAdmin()  {
 		try {
-			ObBridgestoneLogin().LoginIntoBridgestone("AdminTool",Environment,UserName,Password);
+			ObTerraLogin().LoginIntoBridgestone("AdminTool",Environment,UserName,Password);
 		} 
 		 catch (Exception e) {
 			logger.e("Tcs Failed");
