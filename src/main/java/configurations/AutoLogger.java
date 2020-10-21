@@ -20,9 +20,7 @@ public class AutoLogger {
 	}
 
 	public void e(Object msg, Throwable e) {
-
 		String printmsg = "";
-
 		if (msg != null) {
 			printmsg += msg.toString() + " ";
 		}
@@ -32,7 +30,7 @@ public class AutoLogger {
 			printmsg += getStackTrace(e);
 		}
 
-		finalLog(printmsg, ERROR, false);
+		finalLog(printmsg, ERROR);
 	}
 
 	private String getStackTrace(Object e) {
@@ -56,9 +54,8 @@ public class AutoLogger {
 		e(msg, null);
 	}
 
-
 	public void i(String msg) {
-		finalLog(msg, INFO, false);
+		finalLog(msg, INFO);
 	}
 
 	public void i(String msg, Object... args) {
@@ -66,14 +63,14 @@ public class AutoLogger {
 	}
 
 	public void d(String msg) {
-		finalLog(msg, DEBUG, false);
+		finalLog(msg, DEBUG);
 	}
 
 	public void d(String msg, Object... args) {
 		d(String.format(msg, args));
 	}
 
-	private void finalLog(String msg, int level, boolean printConsole) {
+	private void finalLog(String msg, int level) {
 
 		String printmsg="";
 		printmsg += (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"))
@@ -92,8 +89,7 @@ public class AutoLogger {
 				break;
 		}
 
-		Reporter.log(printmsg);
-
+		System.out.println(printmsg);
 	}
 
 }

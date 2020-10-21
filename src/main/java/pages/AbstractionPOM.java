@@ -6,8 +6,6 @@ import configurations.BaseTest;
 
 public class AbstractionPOM extends BaseTest {
 
-	//protected BaseDriver bdriver = null;
-	
 	// Default constructor
 	public AbstractionPOM(BaseDriver bdriver) {
 		this.bdriver = bdriver;

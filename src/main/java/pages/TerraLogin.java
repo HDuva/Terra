@@ -55,7 +55,7 @@ public class TerraLogin extends AbstractionPOM{
 
                 else if (tool.equalsIgnoreCase("Event App")) {
                     bdriver.waitForElementVisible(VerifyEventAppLoginText);
-                    if(!bdriver.getText(VerifyEventAppLoginText).equalsIgnoreCase("Bridgestone Connect")) {
+                    if(!bdriver.getText(VerifyEventAppLoginText).equalsIgnoreCase("Bridgestone bdvkjsb")) {
                         bdriver.captureScreenshot("User are not logged in");
                         Assert.fail("Actual and Expected Home page title is not matched");
                     }

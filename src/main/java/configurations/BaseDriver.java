@@ -55,7 +55,6 @@ public class BaseDriver {
 		this.browser = parseBrowser(browser);
 		this.limit = limit;
 		this.outputPath = outputDir;
-
 		loadWebDriverObject();
 	}
 
@@ -63,21 +62,8 @@ public class BaseDriver {
 		return this.browser;
 	}
 
-	public void stopDriver() {
-		driver.quit();
-	}
-
-	public DesiredCapabilities setFireFoxDesiredCapabilities() {
-		DesiredCapabilities capability = DesiredCapabilities.firefox();
-		capability.setBrowserName("firefox");
-		capability.setPlatform(Platform.WINDOWS);
-		return capability;
-	}
-
 	public Browsers parseBrowser(String browserStr) {
 		Browsers browser;
-
-		logger.i("Parse browser=%s", browserStr);
 
 		List<String> ffKeys = new ArrayList<>();
 		ffKeys.add("firefox");
@@ -98,18 +84,12 @@ public class BaseDriver {
 		chromeKeys.add("Chrome");
 		chromeKeys.add("GC");
 
-		List<String> safariKeys = new ArrayList<>();
-		safariKeys.add("safari");
-		safariKeys.add("Safari");
-
 		if (ffKeys.contains(browserStr)) {
 			browser = Browsers.FIREFOX;
 		} else if (ieKeys.contains(browserStr)) {
 			browser = Browsers.INTERNETEXPLORER;
 		} else if (chromeKeys.contains(browserStr)) {
 			browser = Browsers.CHROME;
-		} else if (safariKeys.contains(browserStr)) {
-			browser = Browsers.SAFARI;
 		} else {
 			browser = Browsers.CHROME;
 		}
@@ -117,43 +97,25 @@ public class BaseDriver {
 	}
 
 	private void loadWebDriverObject() {
-
-		logger.i("loadWebDriverObject");
 		try {
-			String filePath = System.getProperty("user.dir") + "\\Driver\\";
+			String filePath = System.getProperty("user.dir") + "\\Dependency\\";
 
 			if (browser.equals(Browsers.FIREFOX)) {
 				System.setProperty("webdriver.gecko.driver",filePath+"/geckodriver.exe");
 				driver=new FirefoxDriver();
 			 }
-               else if (browser.equals(Browsers.CHROME)) {
-				if(SystemUtils.IS_OS_WINDOWS){
+			else if (browser.equals(Browsers.CHROME)) {
 					System.setProperty("webdriver.chrome.driver",filePath+"/chromedriver.exe");
 					driver=new ChromeDriver();
-					logger.i("Chrome Driver Created");
-					capability = DesiredCapabilities.chrome();
-					ChromeOptions options = new ChromeOptions();
-					options.addArguments("--disable-extensions");
-					capability.setCapability("chrome.switches", Collections.singletonList("--start-maximized"));
-					capability.setCapability(ChromeOptions.CAPABILITY, options);
-				}
-			}
-            else if (browser.equals(Browsers.SAFARI)) {
-			capability = DesiredCapabilities.safari();
-			capability.setCapability("acceptSslCerts", true);
 			}
 
 			driver.manage().window().maximize();
 			mainWindowHandle = driver.getWindowHandle();
-
-			logger.d("MainWindowHandle: '%s'", mainWindowHandle);
-
 			driver.manage().timeouts().implicitlyWait(limit, TimeUnit.SECONDS);
 		} catch (Exception e) {
 			Assert.fail("Failed to get the driver object: " + e.getMessage());
 		}
 	}
-
 
 	public void changeStyleAttrWithElementID(String elementID, String TagName, String newValue) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -170,18 +132,6 @@ public class BaseDriver {
 	public void resetBrowserSize() {
 		Dimension d = new Dimension(1024, 768);
 		driver.manage().window().setSize(d);
-	}
-
-	protected List<WebElement> eles(List<WebElement> weLst) {
-		List<WebElement> eles;
-
-		setImplicitWait(0);
-
-		eles = weLst;
-
-		resetImplicitWait();
-
-		return eles;
 	}
 
 	public void waitUntilPageIsLoaded() {
@@ -204,7 +154,6 @@ public class BaseDriver {
 	public void waitForPageLoad() {
 
 		WebDriverWait wait = new WebDriverWait(driver, limit);
-
 		ExpectedCondition<Boolean> pageLoadCondition = new ExpectedCondition<Boolean>() {
 			public Boolean apply(WebDriver driver) {
 				return "complete".equals(((JavascriptExecutor) driver).executeScript("return document.readyState"));
@@ -261,8 +210,6 @@ public class BaseDriver {
 			waitUntilPageIsLoaded();
 		}
 	}
-
-
 
 	public void clickAndWait(WebElement we) {
 		logger.i("Click On "+we.getText());
@@ -485,22 +432,16 @@ public class BaseDriver {
 	}
 
 	public void waitForJSCondition(final String jsCondition) {
-
 		logger.i("waitForJSCondition: %s", jsCondition);
-
 		setImplicitWait(0);
-
 		WebDriverWait wait = new WebDriverWait(driver, limit);
-
 		ExpectedCondition<Boolean> waitCondition = new ExpectedCondition<Boolean>() {
 			public Boolean apply(WebDriver driver) {
 				Object ret = ((JavascriptExecutor) driver).executeScript("return " + jsCondition);
 				return ret.equals(true);
 			}
 		};
-
 		wait.until(waitCondition);
-
 		resetImplicitWait();
 	}
 
@@ -656,7 +597,6 @@ public class BaseDriver {
 	}
 
 	public void waitForElementVisible(WebElement we) {
-
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		WebDriverWait wait = new WebDriverWait(driver, limit);
 		wait.until(ExpectedConditions.visibilityOf(we));

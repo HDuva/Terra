@@ -28,6 +28,9 @@ public class TerraEventListPage extends AbstractionPOM{
             bdriver.waitForElementVisible(UserMenuButton);
             bdriver.clickAndWait(UserMenuButton);
             bdriver.waitForAllElementsVisible(UserMenuList);
+
+            //user friendly method
+            //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         }
 
         catch(Exception e) {
