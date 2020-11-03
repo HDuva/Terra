@@ -15,7 +15,7 @@ public class CheckUserLogin extends BaseTest {
 	@Test(enabled = true)
 	public void LoginIntoTerraEventApp()  {
 		try {
-			ObTerraLogin().LoginIntoBridgestone("Event App",Environment,UserName,Password);
+			ObTerraLogin().LoginIn("EventApp",UserName,Password);
 		}
 		catch (Exception e) {
 			logger.e("Tcs Failed");

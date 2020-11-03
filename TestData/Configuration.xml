@@ -3,4 +3,12 @@
 	<Configuration>
 		<ImplicitTimeout>60</ImplicitTimeout>
 	</Configuration>
+	<terradev>
+			<eventapp>https://terra.dev.conduit4.com/event/list</eventapp>
+			<admintool>https://terra.dev.conduit4.com/tool/admin/multi/</admintool>
+	</terradev>
+	<terrauat>
+		<eventapp>https://terra.uat.conduit4.com/event/list</eventapp>
+		<admintool>https://terra.uat.conduit4.com/tool/admin/multi/</admintool>
+	</terrauat>
 </FrameworkConfiguration>

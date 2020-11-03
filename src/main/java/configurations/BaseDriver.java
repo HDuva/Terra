@@ -556,10 +556,26 @@ public class BaseDriver {
 		Assert.assertEquals(actValue, expValue, "Element value mismatch!");
 	}
 
+	public void takeScreenshot(String fileSuffix) {
+		try {
+
+			WebDriver augmentedDriver = new Augmenter().augment(wd());
+			File screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
+			String relativePath = "UI" + File.separator + "_" + fileSuffix + ".png";
+
+			File outputDir = new File(outputPath);
+			String parentDir = outputDir.getParent();
+			File finalPath = new File(parentDir, relativePath);
+			FileUtils.copyFile(screenshot, finalPath);
+
+		} catch (Exception e) {
+			logger.e("Error while taking screenshot", e);
+		}
+	}
+
 	public void captureScreenshot(String fileSuffix) {
 		try {
 
-			logger.i("Capture screenshot, suffix=%s", fileSuffix);
 			WebDriver augmentedDriver = new Augmenter().augment(wd());
 			File screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
 
@@ -568,8 +584,6 @@ public class BaseDriver {
 
 			String relativePath = "FailedScenarioScreenShots" + File.separator + nameScreenshot;
 			String reportSrcPath = "." + File.separator + ".." + File.separator + relativePath;
-
-			logger.i("OutPath = %s", outputPath);
 
 			File outputDir = new File(outputPath);
 			String parentDir = outputDir.getParent();
@@ -582,7 +596,6 @@ public class BaseDriver {
 			logger.e("Error while taking screenshot", e);
 		}
 	}
-
 
 	public void waitForAllElementsVisible(List<WebElement> weLst) throws InterruptedException {
 

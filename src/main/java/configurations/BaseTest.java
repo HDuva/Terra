@@ -13,9 +13,11 @@ public class BaseTest extends TestListenerAdapter {
 	protected String outputDir;
 	protected String testMethod;
 	protected AutoLogger logger = new AutoLogger(BaseTest.class);
-	private String	 browser;
-	public String Environment;
-	protected ReadXMLData fwConfigData = new ReadXMLData("./TestData/Configuration.xml");
+	public static String project;
+	public static String browser;
+	public static String Environment;
+
+	public static ReadXMLData fwConfigData = new ReadXMLData("./TestData/Configuration.xml");
 
 	private TerraLogin obTerraLogin =null;
 	private TerraEventListPage ObTerraEventListPage=null;
@@ -45,12 +47,13 @@ public class BaseTest extends TestListenerAdapter {
 	}
 
 	@BeforeSuite(alwaysRun = true)
-	@Parameters({ "browser", "Environment"})
-	public void beforeSuite(@Optional String browser,
+	@Parameters({"Project","Browser","Environment"})
+	public void beforeSuite(String Project,String browser,
 			 @Optional ITestContext testContext, String Environment) {
 		try {
 			this.Environment=Environment;
 			this.browser = browser;
+			this.project=Project;
 			outputDir = testContext.getOutputDirectory();
 		} catch (Exception e) {
 			logger.e("Error in beforeTestSuit!", e);

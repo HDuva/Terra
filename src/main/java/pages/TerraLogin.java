@@ -1,5 +1,6 @@
 package pages;
 
+import configurations.ReadXMLData;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
@@ -28,14 +29,23 @@ public class TerraLogin extends AbstractionPOM{
     @FindBy(xpath = "//div[@class='detail-header__title detail-header__title-center mb-0']")
     private WebElement VerifyEventAppLoginText;
 
+    @FindBy(css = "button[class='user-menu__button']")
+    private WebElement UserMenuButton;
+
+    @FindBy(xpath = "//a[contains(text(),'Logout')]")
+    private WebElement LogoutButton;
+
     //will Navigate to Bridgestone Home Page
-    public void LoginIntoBridgestone(String tool,String env,String emailId,String password) {
+    public void LoginIn(String tool,String emailId,String password) {
         try {
-            env=env.toLowerCase();
-           switch (tool) {
-                case "Event App" -> GoToUrl = "https://terra." + env + ".conduit4.com/event/list";
-                case "AdminTool" -> GoToUrl = "https://terra." + env + ".conduit4.com/tool/admin/multi/";
-                case "Ilt" -> GoToUrl = "https://terra." + env + ".conduit4.com/tool/ilt/Default/content/browse.php";
+            String GoToUrl="";
+            tool=tool.toLowerCase();
+            try {
+                String endURL=project.toLowerCase()+""+Environment.toLowerCase();
+                GoToUrl = fwConfigData.get(endURL,tool).toString();
+            }
+            catch (Exception e) {
+                Assert.fail(e.getMessage());
             }
 
             bdriver.gotoUrl(GoToUrl);
@@ -55,15 +65,36 @@ public class TerraLogin extends AbstractionPOM{
 
                 else if (tool.equalsIgnoreCase("Event App")) {
                     bdriver.waitForElementVisible(VerifyEventAppLoginText);
-                    if(!bdriver.getText(VerifyEventAppLoginText).equalsIgnoreCase("Bridgestone bdvkjsb")) {
+                    if(!bdriver.getText(VerifyEventAppLoginText).equalsIgnoreCase("Terra Events")) {
                         bdriver.captureScreenshot("User are not logged in");
                         Assert.fail("Actual and Expected Home page title is not matched");
                     }
+
+                    bdriver.waitForElementVisible(UserMenuButton);
+                    bdriver.clickAndWait(UserMenuButton);
+                    bdriver.waitForElementVisible(LogoutButton);
+                    bdriver.clickAndWait(UserMenuButton);
                 }
 
+            bdriver.takeScreenshot("Page_AfterLogin");
         } catch (Exception e) {
-            bdriver.captureScreenshot("Error produced while logging on"+e.getMessage());
-            Assert.fail("Login Failed On " + GoToUrl+" because of "+e.getMessage());
+            bdriver.captureScreenshot("Error produced while logging on");
+            Assert.fail("Login Failed On " + GoToUrl+" because of ");
+        }
+    }
+
+    //Log out from application
+    public void Logout() {
+        try {
+            bdriver.waitForElementVisible(UserMenuButton);
+            bdriver.clickAndWait(UserMenuButton);
+            bdriver.waitForElementVisible(LogoutButton);
+            bdriver.clickAndWait(LogoutButton);
+            bdriver.takeScreenshot("Page_AfterLogout");
+            bdriver.waitForElementVisible(LoginButton);
+        } catch (Exception e) {
+            bdriver.captureScreenshot("Error produced while logging on");
+            Assert.fail("Login Failed On " + GoToUrl+" because of ");
         }
     }
 }

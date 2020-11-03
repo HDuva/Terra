@@ -8,7 +8,7 @@ public class CheckProfileOnEventListPage extends BaseTest {
     @Test(enabled = true)
     public void verifyProfileSectionOnEventListPage() {
         try {
-            ObTerraEventListPage().verifyUserProfile();
+            ObTerraEventListPage().searchAndVerifyEvent("G7Sumeet");
         }
         catch (Exception e) {
             logger.e("Tcs Failed");
