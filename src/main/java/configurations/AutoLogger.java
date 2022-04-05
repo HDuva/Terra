@@ -88,8 +88,6 @@ public class AutoLogger {
 				printmsg+=msg;
 				break;
 		}
-
 		System.out.println(printmsg);
 	}
-
 }

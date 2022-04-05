@@ -11,7 +11,7 @@ public class CheckUserLogin extends BaseTest {
 
 	String UserName = LoginData.get("UserDetails", "UserName");
 	String Password = LoginData.get("UserDetails", "Password");
-
+	
 	@Test(enabled = true)
 	public void LoginIntoTerraEventApp()  {
 		try {

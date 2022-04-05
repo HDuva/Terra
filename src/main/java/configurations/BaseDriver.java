@@ -1,8 +1,12 @@
 package configurations;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
@@ -40,7 +44,8 @@ public class BaseDriver {
 	private WebDriverWait webDriverwait = null;
 	private String mainWindowHandle = null;
 	private final Browsers browser;
-	private final long limit;
+	Long limit = null;
+
 	String outputPath;
 	AutoLogger logger = new AutoLogger(BaseDriver.class);
 
@@ -53,7 +58,7 @@ public class BaseDriver {
 	public BaseDriver(String browser,
 					  long limit, String outputDir) {
 		this.browser = parseBrowser(browser);
-		this.limit = limit;
+		this.limit =  limit;
 		this.outputPath = outputDir;
 		loadWebDriverObject();
 	}
@@ -110,11 +115,40 @@ public class BaseDriver {
 			}
 
 			driver.manage().window().maximize();
-			mainWindowHandle = driver.getWindowHandle();
 			driver.manage().timeouts().implicitlyWait(limit, TimeUnit.SECONDS);
 		} catch (Exception e) {
 			Assert.fail("Failed to get the driver object: " + e.getMessage());
 		}
+	}
+
+	public void setBrowserSize() {
+
+		try {
+			Robot rob= new Robot();
+			for (int i=0;i<3;i++) {
+				rob.keyPress(KeyEvent.VK_CONTROL);
+				rob.keyPress(KeyEvent.VK_SUBTRACT);
+				rob.keyRelease(KeyEvent.VK_SUBTRACT);
+				rob.keyRelease(KeyEvent.VK_CONTROL);
+			}
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
+
+		/*for(int i=0; i<3; i++){
+			System.out.println(i+"time");
+			driver.findElement(By.tagName("html")).sendKeys(Keys.chord(Keys.CONTROL,Keys.SUBTRACT));
+		}*/
+
+		/*WebElement html = driver.findElement(By.tagName("html"));
+		html.sendKeys(Keys.chord(Keys.CONTROL,Keys.SUBTRACT));*/
+
+		/*JavascriptExecutor jse = (JavascriptExecutor)driver;
+		jse.executeScript("document.body.style.zoom='75%'");*/
+
+		/*Dimension dm = new Dimension(1536,864);
+		//Setting the current window to that dimension
+		driver.manage().window().setSize(dm);*/
 	}
 
 	public void changeStyleAttrWithElementID(String elementID, String TagName, String newValue) {
@@ -222,7 +256,6 @@ public class BaseDriver {
 		if (waitForPageLoad) {
 			waitUntilPageIsLoaded();
 		}
-
 	}
 
 	public void doubleClickAndWait(WebElement we) {
@@ -346,7 +379,6 @@ public class BaseDriver {
 	}
 
 	public void waitForElement(WebElement we) {
-
 
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		WebDriverWait wait = new WebDriverWait(driver, limit);
@@ -604,9 +636,7 @@ public class BaseDriver {
 		WebDriverWait wait = new WebDriverWait(driver, limit);
 
 		wait.until(ExpectedConditions.visibilityOfAllElements(weLst));
-
 		driver.manage().timeouts().implicitlyWait(limit, TimeUnit.SECONDS);
-
 	}
 
 	public void waitForElementVisible(WebElement we) {
@@ -614,14 +644,13 @@ public class BaseDriver {
 		WebDriverWait wait = new WebDriverWait(driver, limit);
 		wait.until(ExpectedConditions.visibilityOf(we));
 		driver.manage().timeouts().implicitlyWait(limit, TimeUnit.SECONDS);
-
 	}
 	public void waitForElementNotVisible(WebElement we) {
 
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		WebDriverWait wait = new WebDriverWait(driver, limit);
-		wait.until(ExpectedConditions.not(ExpectedConditions.visibilityOf(we)));
-
+		//wait.until(ExpectedConditions.not(ExpectedConditions.visibilityOf(we)));
+		wait.until(ExpectedConditions.invisibilityOf(we));
 		driver.manage().timeouts().implicitlyWait(limit, TimeUnit.SECONDS);
 
 	}
@@ -771,8 +800,6 @@ public class BaseDriver {
 		int yard=clickOnTopSelectMenu.getSize().height-5;
 		action.moveToElement(clickOnTopSelectMenu,xyard,yard).perform();
 		action.moveToElement(clickOnTopSelectMenu,xyard,yard).clickAndHold().release().build().perform();
-
-
 	}
 
 	public void clickOnCheckBoxOnSpecificDimesion(WebElement clickOnTopSelectMenu) {

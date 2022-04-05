@@ -35,6 +35,7 @@ public class TerraLogin extends AbstractionPOM{
     @FindBy(xpath = "//a[contains(text(),'Logout')]")
     private WebElement LogoutButton;
 
+
     //will Navigate to Bridgestone Home Page
     public void LoginIn(String tool,String emailId,String password) {
         try {
@@ -49,7 +50,6 @@ public class TerraLogin extends AbstractionPOM{
             }
 
             bdriver.gotoUrl(GoToUrl);
-
             bdriver.waitForElementVisible(EmailIdInput);
             bdriver.inputText(EmailIdInput,emailId);
 
@@ -76,7 +76,6 @@ public class TerraLogin extends AbstractionPOM{
                     bdriver.clickAndWait(UserMenuButton);
                 }
 
-            bdriver.takeScreenshot("Page_AfterLogin");
         } catch (Exception e) {
             bdriver.captureScreenshot("Error produced while logging on");
             Assert.fail("Login Failed On " + GoToUrl+" because of ");

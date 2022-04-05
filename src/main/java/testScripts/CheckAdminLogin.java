@@ -8,7 +8,6 @@ public class CheckAdminLogin extends BaseTest {
 
 	protected ReadXMLData LoginData = new ReadXMLData(
 			"./TestData/Admin/LoginData.xml");
-
 	String UserName = LoginData.get("UserDetails", "UserName");
 	String Password = LoginData.get("UserDetails", "Password");
 

@@ -4,13 +4,13 @@
 		<listener class-name="org.uncommons.reportng.HTMLReporter" />
 		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
 	</listeners>
-	<parameter name="Project" value="terra"/>
+	<parameter name="Project" value="Terra"/>
 	<parameter name="Browser" value="chrome"/>
 	<parameter name="Environment" value="dev"/>
 	<test name="TerraSanity">
 		<classes>
 			<class name="testScripts.CheckUserLogin" />
-			<class name="testScripts.CheckProfileOnEventListPage"></class>
+			<class name="testScripts.CheckLaunchEvent"></class>
 		</classes> 
 	</test>
 </suite> 

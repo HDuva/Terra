@@ -17,6 +17,7 @@ public class BaseTest extends TestListenerAdapter {
 	public static String browser;
 	public static String Environment;
 
+
 	public static ReadXMLData fwConfigData = new ReadXMLData("./TestData/Configuration.xml");
 
 	private TerraLogin obTerraLogin =null;
