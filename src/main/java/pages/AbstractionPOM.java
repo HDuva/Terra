@@ -12,12 +12,5 @@ public class AbstractionPOM extends BaseTest {
 		// This initElements method will create all WebElements
 		PageFactory.initElements(bdriver.driver, this);
 	}
-	
-	public void updateBDriver(BaseDriver bdriver) {
-		logger.i("updateBDriver");
-		this.bdriver = bdriver;
-		// This initElements method will create all WebElements
-				PageFactory.initElements(bdriver.driver, this);
-	}
-	
+
 }

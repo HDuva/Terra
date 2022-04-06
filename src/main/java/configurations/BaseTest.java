@@ -6,6 +6,7 @@ import org.testng.TestListenerAdapter;
 import org.testng.annotations.*;
 import pages.TerraLogin;
 import pages.TerraEventListPage;
+import pages.VirtualEvent;
 
 public class BaseTest extends TestListenerAdapter {
 
@@ -22,6 +23,7 @@ public class BaseTest extends TestListenerAdapter {
 
 	private TerraLogin obTerraLogin =null;
 	private TerraEventListPage ObTerraEventListPage=null;
+	private VirtualEvent ObVirtualEvent=null;
 
 	public TerraLogin ObTerraLogin() {
 		try {
@@ -45,6 +47,19 @@ public class BaseTest extends TestListenerAdapter {
 		}
 		Assert.assertNotNull(ObTerraEventListPage, "Event List Page is not initialized!");
 		return ObTerraEventListPage;
+	}
+
+	public VirtualEvent ObVirtualEvent() {
+
+		try {
+			if (ObVirtualEvent == null) {
+				ObVirtualEvent = new VirtualEvent(bdriver);
+			}
+		} catch (Exception e) {
+			logger.e(e.getMessage());
+		}
+		Assert.assertNotNull(ObVirtualEvent, "Event List Page is not initialized!");
+		return ObVirtualEvent;
 	}
 
 	@BeforeSuite(alwaysRun = true)

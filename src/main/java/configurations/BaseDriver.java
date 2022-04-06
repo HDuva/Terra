@@ -121,8 +121,15 @@ public class BaseDriver {
 		}
 	}
 
-	public void setBrowserSize() {
+	public void clickUsingJavascript(WebElement we) {
+		JavascriptExecutor executor = (JavascriptExecutor)driver;
+		executor.executeScript("arguments[0].click();", we);
 
+	}
+
+
+	public void setBrowserSize() {
+		logger.i("Set Browser size");
 		try {
 			Robot rob= new Robot();
 			for (int i=0;i<3;i++) {
@@ -246,8 +253,15 @@ public class BaseDriver {
 	}
 
 	public void clickAndWait(WebElement we) {
+
 		logger.i("Click On "+we.getText());
-		clickAndWait(we, true);
+
+		//javascript is used because normal click will not work after resize
+		JavascriptExecutor executor = (JavascriptExecutor)driver;
+		executor.executeScript("arguments[0].click();", we);
+
+		//Normal click
+		//clickAndWait(we, true);
 	}
 
 	public void doubleClickAndWait(WebElement we, boolean waitForPageLoad) {
@@ -607,7 +621,6 @@ public class BaseDriver {
 
 	public void captureScreenshot(String fileSuffix) {
 		try {
-
 			WebDriver augmentedDriver = new Augmenter().augment(wd());
 			File screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
 
@@ -640,13 +653,14 @@ public class BaseDriver {
 	}
 
 	public void waitForElementVisible(WebElement we) {
+		logger.i("Wait for element Visible "+we.getText().strip());
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		WebDriverWait wait = new WebDriverWait(driver, limit);
 		wait.until(ExpectedConditions.visibilityOf(we));
 		driver.manage().timeouts().implicitlyWait(limit, TimeUnit.SECONDS);
 	}
-	public void waitForElementNotVisible(WebElement we) {
 
+	public void waitForElementNotVisible(WebElement we) {
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		WebDriverWait wait = new WebDriverWait(driver, limit);
 		//wait.until(ExpectedConditions.not(ExpectedConditions.visibilityOf(we)));

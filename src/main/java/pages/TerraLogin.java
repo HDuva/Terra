@@ -15,7 +15,7 @@ public class TerraLogin extends AbstractionPOM{
     }
 
     @FindBy(xpath = "//button[@type='submit']")
-    private WebElement LoginButton;
+    private WebElement LoginButton; 
 
     @FindBy(xpath = "//input[@id='email']")
     private WebElement EmailIdInput;
@@ -35,8 +35,7 @@ public class TerraLogin extends AbstractionPOM{
     @FindBy(xpath = "//a[contains(text(),'Logout')]")
     private WebElement LogoutButton;
 
-
-    //will Navigate to Bridgestone Home Page
+    //will Navigate to Terra Home Page
     public void LoginIn(String tool,String emailId,String password) {
         try {
             String GoToUrl="";
@@ -50,6 +49,9 @@ public class TerraLogin extends AbstractionPOM{
             }
 
             bdriver.gotoUrl(GoToUrl);
+            Thread.sleep(1000);
+            bdriver.setBrowserSize();
+            Thread.sleep(1000);
             bdriver.waitForElementVisible(EmailIdInput);
             bdriver.inputText(EmailIdInput,emailId);
 
@@ -63,7 +65,7 @@ public class TerraLogin extends AbstractionPOM{
                     bdriver.waitForElementVisible(VerifyAdminToolLoginText);
                 }
 
-                else if (tool.equalsIgnoreCase("Event App")) {
+                else if (tool.equalsIgnoreCase("EventApp")) {
                     bdriver.waitForElementVisible(VerifyEventAppLoginText);
                     if(!bdriver.getText(VerifyEventAppLoginText).equalsIgnoreCase("Terra Events")) {
                         bdriver.captureScreenshot("User are not logged in");

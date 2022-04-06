@@ -7,9 +7,9 @@
 	<parameter name="Project" value="Terra"/>
 	<parameter name="Browser" value="chrome"/>
 	<parameter name="Environment" value="dev"/>
-	<test name="TerraSanity">
+	<test name="TerraSanityOnFrontend">
 		<classes>
-			<class name="testScripts.CheckUserLogin" />
+			<class name="testScripts.CheckEventAppLogin"/>
 			<class name="testScripts.CheckLaunchEvent"></class>
 		</classes> 
 	</test>

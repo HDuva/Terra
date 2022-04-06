@@ -42,7 +42,6 @@ public class TerraEventListPage extends AbstractionPOM{
     //will search and launch event
     public void searchAndLaunchEvent(String eventName) {
         try {
-
             bdriver.waitForElementVisible(searchBox);
             bdriver.inputText(searchBox,eventName);
             bdriver.sendKey(searchBox, Keys.ENTER);
@@ -54,8 +53,6 @@ public class TerraEventListPage extends AbstractionPOM{
             bdriver.clickAndWait(searchEventName);
             bdriver.waitForElementVisible(launchButton);
             bdriver.clickAndWait(launchButton);
-
-            //bdriver.waitForElementNotVisible(Loader);
             bdriver.waitForElementVisible(headerEventName);
             if (!bdriver.getText(headerEventName).equalsIgnoreCase(eventName)) {
                 bdriver.captureScreenshot("Launch Event name is not same as Displayed event");
