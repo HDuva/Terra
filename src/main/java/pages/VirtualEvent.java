@@ -15,22 +15,23 @@ public class VirtualEvent extends AbstractionPOM{
         super(bdriver);
     }
 
-    @FindBy(css = "button[class='user-menu__button']")
-    private WebElement UserMenuButton;
+    @FindBy(css = "button[class='user-profile user-points-widget__user-profile'] img")
+    private WebElement headerProfileIcon;
+
+    @FindBy(css = "button[class='user-profile profile-modal__user-profile']")
+    private WebElement avatarIconProfileModal;
 
     @FindBys({
-
             @FindBy(css = "div.user-menu__menu-item a.user-menu__menu-item-label")
     })
     private List<WebElement> UserMenuList;
 
-    @FindBy(xpath = "//input[@id='search-value']")
-    private WebElement searchBox;
-
-    //will search and launch event
+    //will redirect to edit profile page
     public void ClickOnProfileIcon(String eventName) {
         try {
-
+            bdriver.waitForElementVisible(headerProfileIcon);
+            bdriver.clickAndWait(headerProfileIcon);
+            bdriver.waitForElementNotVisible(avatarIconProfileModal);
         }
 
         catch(Exception e) {
