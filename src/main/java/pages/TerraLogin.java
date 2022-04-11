@@ -23,7 +23,7 @@ public class TerraLogin extends AbstractionPOM{
     @FindBy(xpath = "//input[@id='password']")
     private WebElement PasswordInput;
 
-    @FindBy(xpath = "//h1[text()='Multi Event Admin']")
+    @FindBy(xpath = "//div[@class=' row action-bar']//span[text()='Events Manager']")
     private WebElement VerifyAdminToolLoginText;
 
     @FindBy(xpath = "//div[@class='detail-header__title detail-header__title-center mb-0']")
@@ -49,9 +49,6 @@ public class TerraLogin extends AbstractionPOM{
             }
 
             bdriver.gotoUrl(GoToUrl);
-            Thread.sleep(1000);
-            bdriver.setBrowserSize();
-            Thread.sleep(1000);
             bdriver.waitForElementVisible(EmailIdInput);
             bdriver.inputText(EmailIdInput,emailId);
 
@@ -63,6 +60,10 @@ public class TerraLogin extends AbstractionPOM{
 
                 if(tool.equalsIgnoreCase("AdminTool")) {
                     bdriver.waitForElementVisible(VerifyAdminToolLoginText);
+                    if(!bdriver.getText(VerifyAdminToolLoginText).equalsIgnoreCase("Events Manager")) {
+                        bdriver.captureScreenshot("User are not logged in");
+                        Assert.fail("Actual and Expected Home page title is not matched");
+                    }
                 }
 
                 else if (tool.equalsIgnoreCase("EventApp")) {

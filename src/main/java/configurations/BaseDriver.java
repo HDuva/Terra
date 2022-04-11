@@ -101,6 +101,7 @@ public class BaseDriver {
 		return browser;
 	}
 
+	//Will set webdriver object with browser and it's property
 	private void loadWebDriverObject() {
 		try {
 			String filePath = System.getProperty("user.dir") + "\\Dependency\\";
@@ -126,8 +127,7 @@ public class BaseDriver {
 		executor.executeScript("arguments[0].click();", we);
 
 	}
-
-
+	// Set browser size based on project system.project requirements
 	public void setBrowserSize() {
 		logger.i("Set Browser size");
 		try {
@@ -158,6 +158,7 @@ public class BaseDriver {
 		driver.manage().window().setSize(dm);*/
 	}
 
+
 	public void changeStyleAttrWithElementID(String elementID, String TagName, String newValue) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		String executeScriptText = "document.getElementById('" + elementID + "').setAttribute('" + TagName + "', '"
@@ -176,39 +177,29 @@ public class BaseDriver {
 	}
 
 	public void waitUntilPageIsLoaded() {
-
 		setImplicitWait(0);
-
 		WebDriverWait wait = new WebDriverWait(driver, limit);
-
 		ExpectedCondition<Boolean> pageLoadCondition = driver -> {
 			assert driver != null;
 			return "complete".equals(((JavascriptExecutor) driver).executeScript("return document.readyState"));
 		};
-
 		wait.until(pageLoadCondition);
-
 		resetImplicitWait();
-
 	}
 
 	public void waitForPageLoad() {
-
 		WebDriverWait wait = new WebDriverWait(driver, limit);
 		ExpectedCondition<Boolean> pageLoadCondition = new ExpectedCondition<Boolean>() {
 			public Boolean apply(WebDriver driver) {
 				return "complete".equals(((JavascriptExecutor) driver).executeScript("return document.readyState"));
 			}
 		};
-
 		wait.until(pageLoadCondition);
-
 		resetImplicitWait();
 
 	}
 
 	public void switchToFrame(WebElement we) {
-
 		logger.i("switchToFrame");
 		driver.switchTo().frame(we);
 	}
@@ -219,7 +210,6 @@ public class BaseDriver {
 	}
 
 	public void inputTextToiFrame(WebElement we, String expText) {
-
 		logger.i("inputTextToiFrame");
 		switchToFrame(we);
 		switchToInnerFrame(we, expText);
@@ -253,13 +243,10 @@ public class BaseDriver {
 	}
 
 	public void clickAndWait(WebElement we) {
-
 		logger.i("Click On "+we.getText());
-
 		//javascript is used because normal click will not work after resize
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
 		executor.executeScript("arguments[0].click();", we);
-
 		//Normal click
 		//clickAndWait(we, true);
 	}
@@ -334,7 +321,6 @@ public class BaseDriver {
 	}
 
 	public void waitForDropDownToLoad(final WebElement elementId) {
-
 		logger.i("waitForDropDownToLoad");
 		setImplicitWait(0);
 		WebDriverWait wait = new WebDriverWait(driver, limit);
@@ -350,104 +336,69 @@ public class BaseDriver {
 	}
 
 	public void waitForElementToBeClickable(WebElement webElement, int implicitTime) {
-
 		logger.i("waitForElementToBeClickable");
-
 		if (implicitTime > 0) {
 			webDriverwait = new WebDriverWait(driver, implicitTime);
 		}
-
 		webDriverwait.until(ExpectedConditions.elementToBeClickable(webElement));
 	}
 
 	public void waitForElementState(WebElement webElement, int implicitTime, boolean elementState) {
-
 		logger.i("waitForElementState");
-
 		if (implicitTime > 0) {
 			webDriverwait = new WebDriverWait(driver, implicitTime);
 		}
-
 		webDriverwait.until(ExpectedConditions.elementSelectionStateToBe(webElement, elementState));
 	}
 
 	public void waitForTextChangeInElement(WebElement we) {
 		logger.i("waitForTextChangeInElement");
-
 		String actText = getText(we);
-
 		waitForTextNotInElement(we, actText);
 	}
 
 	public void waitForTextNotInElement(WebElement we, String text) {
-
 		logger.i("waitForTextNotInElement");
-
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		WebDriverWait wait = new WebDriverWait(driver, limit);
-
 		wait.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(we, text)));
-
 		driver.manage().timeouts().implicitlyWait(limit, TimeUnit.SECONDS);
-
 	}
 
 	public void waitForElement(WebElement we) {
-
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		WebDriverWait wait = new WebDriverWait(driver, limit);
-
 		wait.until(ExpectedConditions.elementToBeClickable(we));
-
 		driver.manage().timeouts().implicitlyWait(limit, TimeUnit.SECONDS);
-
 	}
 
 	public void waitForValueNotInElement(WebElement we, String text) {
-
 		logger.i("waitForValueNotInElement");
-
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		WebDriverWait wait = new WebDriverWait(driver, limit);
-
 		wait.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElementValue(we, text)));
-
 		driver.manage().timeouts().implicitlyWait(limit, TimeUnit.SECONDS);
-
 	}
 
 	public void waitForTextInElement(WebElement we, String expText) {
-
 		logger.i("waitForTextInElement");
-
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		WebDriverWait wait = new WebDriverWait(driver, limit);
-
 		wait.until(ExpectedConditions.textToBePresentInElement(we, expText));
-
 		driver.manage().timeouts().implicitlyWait(limit, TimeUnit.SECONDS);
-
 	}
 
 	public void waitForTextToBePresentInElement(WebElement we, String expText) {
-
 		logger.i("waitForTextInElementWithAttribute");
-
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		WebDriverWait wait = new WebDriverWait(driver, limit);
-
 		wait.until(ExpectedConditions.textToBePresentInElement(we, expText));
-
 		driver.manage().timeouts().implicitlyWait(limit, TimeUnit.SECONDS);
-
 	}
 
 	public void waitForTextToBePresentInElementWithAttribute(WebElement we, String expText, String attributeName) {
-
 		logger.i("waitForTextToBePresentInElementWithAttribute");
-
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-
 		int attempts = 0;
 		while (attempts < 500) {
 			try {
@@ -461,19 +412,14 @@ public class BaseDriver {
 			}
 			attempts++;
 		}
-
 		driver.manage().timeouts().implicitlyWait(limit, TimeUnit.SECONDS);
 	}
 
 	public void waitForValueInElement(WebElement we, String expText) {
-
 		logger.i("waitForValueInElement");
-
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		WebDriverWait wait = new WebDriverWait(driver, limit);
-
 		wait.until(ExpectedConditions.textToBePresentInElementValue(we, expText));
-
 		driver.manage().timeouts().implicitlyWait(limit, TimeUnit.SECONDS);
 	}
 
@@ -604,16 +550,13 @@ public class BaseDriver {
 
 	public void takeScreenshot(String fileSuffix) {
 		try {
-
 			WebDriver augmentedDriver = new Augmenter().augment(wd());
 			File screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
 			String relativePath = "UI" + File.separator + "_" + fileSuffix + ".png";
-
 			File outputDir = new File(outputPath);
 			String parentDir = outputDir.getParent();
 			File finalPath = new File(parentDir, relativePath);
 			FileUtils.copyFile(screenshot, finalPath);
-
 		} catch (Exception e) {
 			logger.e("Error while taking screenshot", e);
 		}
@@ -643,11 +586,9 @@ public class BaseDriver {
 	}
 
 	public void waitForAllElementsVisible(List<WebElement> weLst) throws InterruptedException {
-
 		Thread.sleep(1000);
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		WebDriverWait wait = new WebDriverWait(driver, limit);
-
 		wait.until(ExpectedConditions.visibilityOfAllElements(weLst));
 		driver.manage().timeouts().implicitlyWait(limit, TimeUnit.SECONDS);
 	}
@@ -668,9 +609,9 @@ public class BaseDriver {
 		driver.manage().timeouts().implicitlyWait(limit, TimeUnit.SECONDS);
 
 	}
+
 	public void verifyIsNotVisible(WebElement we) {
 		logger.i("verifyIsNotVisible");
-
 		if (!isVisible(we)) {
 			Assert.assertFalse(isVisible(we), "Element '" + we + "' is found visible!");
 		} else {
@@ -679,7 +620,6 @@ public class BaseDriver {
 	}
 
 	public void verifyIsSelected(WebElement we) {
-
 		logger.i("verifyIsSelected");
 		Assert.assertTrue(isSelected(we), "Element '" + we + "' is not selected!");
 	}
@@ -707,7 +647,6 @@ public class BaseDriver {
 
 	public void alertConfirm(boolean switchBackToMainWindow) {
 		logger.i("alertConfirm: backToMainWaindow=%s", switchBackToMainWindow);
-
 		try {
 			Alert alert = driver.switchTo().alert();
 			alert.accept();
@@ -734,13 +673,13 @@ public class BaseDriver {
 	 	logger.e(e);
 	  }
 	}
+
 	public void alertConfirm() {
 		alertConfirm(true);
 	}
 
 	public void alertDismiss() {
 		logger.i("alertDismiss");
-
 		try {
 			Alert alert = driver.switchTo().alert();
 			alert.dismiss();
@@ -750,16 +689,12 @@ public class BaseDriver {
 		} catch (Exception e) {
 			logger.e(e);
 		}
-
 		driver.switchTo().defaultContent();
 	}
 
 	public void switchToNewWindow() {
-
 		logger.i("switchToNewWindow");
-
 		int trials = 3;
-
 		Set<String> windowIds;
 		do {
 			windowIds = driver.getWindowHandles();
@@ -779,37 +714,30 @@ public class BaseDriver {
 
 	public void switchToMainWindow() {
 		logger.i("switchToMainWindow, mainWindowHandle=%s", mainWindowHandle);
-
 		Assert.assertNotNull(mainWindowHandle, "Main Window Handle not initialized!");
-
 		driver.switchTo().window(mainWindowHandle);
 	}
 
 	public void closeWindow() {
 		logger.i("closeWindow");
-
 		driver.close();
 	}
 
 	public void verifyWindowTitle(String title) {
 		logger.i("verifyWindowTitle, expTitle=%s", title);
-
 		String actTitle = getTitle();
-
 		logger.d("verifyWindowTitle, actTitle=%s", actTitle);
-
 		Assert.assertEquals(actTitle, title, "Window title mismatch!");
 	}
 
 	public void mouseHoverClickOnElement(WebElement ele) {
-
-		 Actions action = new Actions(driver);
+		Actions action = new Actions(driver);
 		logger.d("mouseHover And Click On "+ele.getText());
 		action.moveToElement(ele).click().build().perform();
 	}
 
 	public void clickOnElementOnSpecificDimesion(WebElement clickOnTopSelectMenu) {
-		 Actions action = new Actions(driver);
+		Actions action = new Actions(driver);
 		int xyard=clickOnTopSelectMenu.getSize().width-10;
 		int yard=clickOnTopSelectMenu.getSize().height-5;
 		action.moveToElement(clickOnTopSelectMenu,xyard,yard).perform();
@@ -826,17 +754,14 @@ public class BaseDriver {
 
 	public void dragAndDrop(WebElement sourceWE, WebElement targetWE) {
 		logger.i("dragAndDrop");
-
 		(new Actions(driver)).dragAndDrop(sourceWE, targetWE).perform();
 	}
 
 	public void setImplicitWait(int timeInSec) {
-
 		driver.manage().timeouts().implicitlyWait(timeInSec, TimeUnit.SECONDS);
 	}
 
 	public void resetImplicitWait() {
-
 		driver.manage().timeouts().implicitlyWait(limit, TimeUnit.SECONDS);
 	}
 
@@ -908,7 +833,6 @@ public class BaseDriver {
 
 	public String[] getAllListItems(WebElement we) {
 		logger.i("getAllListItems");
-
 		Select select = new Select(we);
 		List<WebElement> options = select.getOptions();
 		int j = 0;
@@ -952,9 +876,7 @@ public class BaseDriver {
 	}
 
 	public void verifyColor(WebElement we, String expcolor) {
-
 		String color = we.getCssValue("color");
-
 		String[] numbers = color.replace("rgba(", "").replace(")", "").split(",");
 		int r = Integer.parseInt(numbers[0].trim());
 		int g = Integer.parseInt(numbers[1].trim());
@@ -962,11 +884,9 @@ public class BaseDriver {
 		String hex = "#" + Integer.toHexString(r) + Integer.toHexString(g) + Integer.toHexString(b);
 		Assert.assertEquals(hex.toUpperCase(), expcolor.toUpperCase(),
 				"Element text color mismatch! Expected:" + expcolor.toUpperCase() + "actual:" + hex.toUpperCase());
-
 	}
 
 	public void verifyBackgroundColor(WebElement we, String expcolor) {
-
 		String color = we.getCssValue("background-color");
 		String[] numbers = color.replace("rgba(", "").replace(")", "").split(",");
 		int r = Integer.parseInt(numbers[0].trim());
@@ -980,24 +900,18 @@ public class BaseDriver {
 
 	public void verifyElementValueIsEmpty(WebElement we) {
 		logger.i("verifyElementValueIsEmpty");
-
 		Assert.assertEquals(getValue(we), "", "Element '" + we + "' Value is not empty");
-
 	}
 
 	public void openDuplicateWindow() {
 		logger.i("openDuplicateWindow");
 		((JavascriptExecutor) driver).executeScript("(window.open(document.URL))");
-
 	}
-
-
 
 	public void verifyTextBoxIsNotEditable(WebElement we) {
 		logger.i("verifyTextBoxIsNotEditable");
 		String value = we.getAttribute("readonly");
 		Assert.assertTrue(value.contentEquals("true"), "Element '" + we + "' Is Editable");
-
 	}
 
 	public void verifyTextIsUnderLined(WebElement we) {
@@ -1005,7 +919,6 @@ public class BaseDriver {
 		String value = we.getAttribute("style");
 		Assert.assertTrue(value.contains("text-decoration: underline"),
 				"Text of Element '" + we + "' Is not Underlined");
-
 	}
 
 	public void uploadFile(WebElement we, String path) {
@@ -1014,12 +927,9 @@ public class BaseDriver {
 	}
 
 	public void waitForElementTextNotEmpty(WebElement we) {
-
 		logger.i("waitForElementTextNotEmpty");
-
 		int trials = 10;
 		int len;
-
 		do {
 			String text = getText(we);
 			len = text.length();
@@ -1032,9 +942,7 @@ public class BaseDriver {
 	}
 
 	public void waitForElementValueNotEmpty(WebElement we) {
-
 		logger.i("waitForElementValueNotEmpty");
-
 		int trials = 10;
 		int len;
 
@@ -1056,7 +964,6 @@ public class BaseDriver {
 
 	public void verifyElementContainsValue(WebElement we, String expLabel) {
 		logger.i("verifySelectedLabel, expLabel=%s", expLabel);
-
 		String actValue = getValue(we);
 		Assert.assertTrue(actValue.contains(expLabel), "Expected String is not present");
 
@@ -1064,7 +971,6 @@ public class BaseDriver {
 
 	public void verifyElementValueNotEmpty(WebElement we) {
 		logger.i("verifyElementValueNotEmpty");
-
 		Assert.assertNotEquals(getValue(we), "", "Element '" + we + "' Value is empty");
 
 	}
@@ -1079,18 +985,14 @@ public class BaseDriver {
 	}
 
 	public void verifySelectionBoxIsMultiple(String elementId) {
-
 		logger.i("verifyIsMultipleSelectionBox");
-
 		Object isMultiple = ((JavascriptExecutor) driver)
 				.executeScript("return document.getElementById('" + elementId + "').multiple");
 		Assert.assertEquals(isMultiple, true, "Element is not Multiple Selection Box");
 	}
 
 	public int getselectedRadioButton(List<WebElement> weLst) {
-
 		logger.i("getselectedRadioButton");
-
 		int optionNo = 0;
 		for (int i = 0; i <= weLst.size(); i++) {
 			if (weLst.get(i).isSelected()) {
@@ -1098,12 +1000,10 @@ public class BaseDriver {
 				break;
 			}
 		}
-
 		return optionNo;
 	}
 
 	public void verifyJSCondition(final String jsCondition, boolean status) {
-
 		logger.i("verifyJSCondition: %s", jsCondition);
 		Object ret = ((JavascriptExecutor) driver).executeScript("return " + jsCondition);
 		Assert.assertEquals(status, ret, "Status for jsCondition :" + jsCondition + " is not '" + status + "'");
@@ -1111,7 +1011,6 @@ public class BaseDriver {
 	}
 
 	public void executeJSCondition(final String jsCondition) {
-
 		logger.i("executeJSCondition: %s", jsCondition);
 		((JavascriptExecutor) driver).executeScript(jsCondition);
 	}
@@ -1132,12 +1031,9 @@ public class BaseDriver {
 	}
 
 	public void waitForChangeInLengthOfValue(final WebElement we, final int valueLen) {
-
 		logger.i("waitForChangeInLengthOfValue");
 		setImplicitWait(0);
-
 		WebDriverWait wait = new WebDriverWait(driver, limit);
-
 		ExpectedCondition<Boolean> waitCondition = new ExpectedCondition<Boolean>() {
 			public Boolean apply(WebDriver driver) {
 				boolean flag = false;
@@ -1149,7 +1045,6 @@ public class BaseDriver {
 		};
 
 		wait.until(waitCondition);
-
 		resetImplicitWait();
 	}
 
@@ -1169,34 +1064,25 @@ public class BaseDriver {
 	public void waitForWindowToClose() {
 
 		final int windowCount = driver.getWindowHandles().size();
-
 		logger.i("waitForWindowToClose");
 		if (windowCount > 1) {
-
 			setImplicitWait(0);
-
 			WebDriverWait wait = new WebDriverWait(driver, limit);
-
 			ExpectedCondition<Boolean> windowClosedCondition = new ExpectedCondition<>() {
 				public Boolean apply(WebDriver driver) {
 					assert driver != null;
 					return driver.getWindowHandles().size() < windowCount;
 				}
 			};
-
 			wait.until(windowClosedCondition);
-
 		}
-
 		switchToMainWindow();
 		resetImplicitWait();
-
 	}
 
 	public boolean isAlertPresent() {
 
 		boolean presentFlag = false;
-
 		try {
 			logger.i("isAlertPresent");
 
@@ -1238,7 +1124,6 @@ public class BaseDriver {
 	public void verifyIsEnabled(WebElement we) {
 
 		logger.i("verifyIsEnabled");
-
 		Assert.assertTrue(isEnabled(we), "Element '" + we + "' is not enabled!");
 	}
 
@@ -1292,7 +1177,6 @@ public class BaseDriver {
 
 	public void moveOnElement(WebElement we) {
 		logger.i("moveOnElement "+we.getText());
-
 		Actions actions = new Actions(driver);
 		actions.moveToElement(we);
 		actions.perform();
@@ -1303,8 +1187,7 @@ public class BaseDriver {
 		driver.manage().timeouts().implicitlyWait(timeOut, TimeUnit.SECONDS);
 	}
 
-	public WebElement FindElementByCss(String object)
-	{
+	public WebElement FindElementByCss(String object) {
 		logger.i("findElementByCSS");
 		try {
 			WebElement element = driver.findElement(By.cssSelector(object));
@@ -1322,7 +1205,6 @@ public class BaseDriver {
 		} catch (Exception e) {
 			return null;
 		}
-
 	}
 
 	public List<String> getListItemFromString(String stringArray) {
@@ -1372,9 +1254,7 @@ public class BaseDriver {
 
 		}
 
-
-	public boolean isClickable(WebElement el)
-	{
+	public boolean isClickable(WebElement el) {
 		try{
 			WebDriverWait wait = new WebDriverWait(driver, 6);
 			wait.until(ExpectedConditions.elementToBeClickable(el));
@@ -1384,6 +1264,4 @@ public class BaseDriver {
 			return false;
 		}
 	}
-
-
 }

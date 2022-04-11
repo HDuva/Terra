@@ -5,8 +5,7 @@ import org.testng.ITestContext;
 import org.testng.TestListenerAdapter;
 import org.testng.annotations.*;
 import pages.TerraLogin;
-import pages.TerraEventListPage;
-import pages.VirtualEvent;
+import pages.EventListPage;
 
 public class BaseTest extends TestListenerAdapter {
 
@@ -18,8 +17,7 @@ public class BaseTest extends TestListenerAdapter {
 	public static String Environment;
 	public static ReadXMLData fwConfigData = new ReadXMLData("./TestData/Configuration.xml");
 	private TerraLogin obTerraLogin =null;
-	private TerraEventListPage ObTerraEventListPage=null;
-	private VirtualEvent ObVirtualEvent=null;
+	private EventListPage obEventListPage =null;
 
 	public TerraLogin ObTerraLogin() {
 		try {
@@ -33,28 +31,16 @@ public class BaseTest extends TestListenerAdapter {
 		return obTerraLogin;
 	}
 
-	public TerraEventListPage ObTerraEventListPage() {
+	public EventListPage ObTerraEventListPage() {
 		try {
-			if (ObTerraEventListPage == null) {
-				ObTerraEventListPage = new TerraEventListPage(bdriver);
+			if (obEventListPage == null) {
+				obEventListPage = new EventListPage(bdriver);
 			}
 		} catch (Exception e) {
 			logger.e(e.getMessage());
 		}
-		Assert.assertNotNull(ObTerraEventListPage, "Event List Page is not initialized!");
-		return ObTerraEventListPage;
-	}
-
-	public VirtualEvent ObVirtualEvent() {
-		try {
-			if (ObVirtualEvent == null) {
-				ObVirtualEvent = new VirtualEvent(bdriver);
-			}
-		} catch (Exception e) {
-			logger.e(e.getMessage());
-		}
-		Assert.assertNotNull(ObVirtualEvent, "Event List Page is not initialized!");
-		return ObVirtualEvent;
+		Assert.assertNotNull(obEventListPage, "Event List Page is not initialized!");
+		return obEventListPage;
 	}
 
 	@BeforeSuite(alwaysRun = true)
@@ -95,5 +81,3 @@ public class BaseTest extends TestListenerAdapter {
 		  bdriver.quit();
 	}
 }
-	
-	

@@ -104,12 +104,9 @@ public class ReadXMLData {
 			}
 			value = node.getFirstChild().getNodeValue();
 
-			
-
 		} catch (Exception e) {
 			logger.e(e);
 		}
-
 		return value;
 	}
 }

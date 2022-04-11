@@ -1,9 +1,8 @@
 @echo off
-set projectLocation=F:\Terra\TerraFramework
+set projectLocation=E:\Automation\Project\Terra
 cd %projectLocation%
-set classpath=%projectLocation%\src\main\java;%projectLocation%\Dependency\org\testng\testng\7.3.0\*
+set classpath=%projectLocation%\src\main\java;%projectLocation%\Dependency*
 
-@echo on
-mvn clean test -DsuiteXmlFile=%projectLocation%\TestSuite\RunSuite.xml
+java org.testng.TestNG %projectLocation%\TestSuite\SmokeTest.xml
 
 pause
