@@ -9,8 +9,8 @@
 	<parameter name="Environment" value="dev"/>
 	<test name="TerraSanityOnFrontend">
 		<classes>
-			<class name="testScripts.CheckEventAppLogin"/>
-			<class name="testScripts.CheckLaunchEvent"></class>
+			<class name="testCases.CheckEventAppLogin"/>
+			<class name="testCases.CheckLaunchEvent"></class>
 		</classes> 
 	</test>
 </suite> 

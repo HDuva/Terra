@@ -9,7 +9,7 @@
 	<parameter name="Environment" value="dev"/>
 	<test name="TerraSanityOnAdminTool">
 		<classes>
-			<class name="testScripts.CheckAdminLogin"/>
+			<class name="testCases.CheckAdminLogin"/>
 		</classes> 
 	</test>
 </suite> 

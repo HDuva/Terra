@@ -1,25 +1,24 @@
-package testScripts;
+package testCases;
 
+import org.testng.annotations.Test;
 import configurations.BaseTest;
 import configurations.ReadXMLData;
-import org.testng.annotations.Test;
 
-public class CheckEventAppLogin extends BaseTest {
+public class CheckAdminLogin extends BaseTest {
 
 	protected ReadXMLData LoginData = new ReadXMLData(
-			"./TestData/User/LoginData.xml");
-
+			"./TestData/Admin/LoginData.xml");
 	String UserName = LoginData.get("UserDetails", "UserName");
 	String Password = LoginData.get("UserDetails", "Password");
 
 	@Test(enabled = true)
-	public void LoginIntoTerraEventApp()  {
+	public void LoginIntoTerraAdmin()  {
 		try {
-			ObTerraLogin().LoginIn("EventApp",UserName,Password);
-		}
-		catch (Exception e) {
+			ObTerraLogin().LoginIn("AdminTool",UserName,Password);
+		} 
+		 catch (Exception e) {
 			logger.e("Tcs Failed");
-		}
+		}	
 	}
 }
 

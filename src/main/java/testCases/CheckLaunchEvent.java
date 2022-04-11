@@ -1,4 +1,4 @@
-package testScripts;
+package testCases;
 
 import configurations.BaseTest;
 import configurations.ReadXMLData;
